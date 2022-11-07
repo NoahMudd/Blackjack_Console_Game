@@ -13,147 +13,186 @@ namespace Blackjack_ConsoleApp
             int cardOne;
             int cardTwo;
             
+            int selectedOption = 1;
             
-            
-            Console.WriteLine("BlackJack Game");
-            Console.WriteLine("--------------");
-            Console.WriteLine(" 1. Single Player");
-            Console.WriteLine(" 2. Multiplayer");
-            Console.WriteLine(" 3. Rules");
-            Console.WriteLine(" 4. Leaderboard");
-            Console.WriteLine(" 5. Quit");
-
-            Console.WriteLine("Type numeral and hit enter to select option");
-            var selectedOption = Int32.Parse(Console.ReadLine());
-
-            switch (selectedOption)
+            while (selectedOption != 9)
             {
-                case 1:
-                    Console.Clear();
-                    Console.WriteLine("Dealer: What is your name?");
-                    string player1Name = Console.ReadLine();
-                    Console.WriteLine("Dealer: Welcome to the table, " + player1Name + "!");
-                    Console.WriteLine("Your hand: ");
-                   
-                    //deals cards to player
-                    var player1CardsList = new List<DealtCards>();
-                    for (int i = 0; i < 2; i++)
-                    {
-                        var DealtCards = new DealtCards();
-                        int cardRoll = UtilityDealer.RandomCardRoll();
-                        string playerCardFace = UtilityDealer.DealCardFace(cardRoll);
-                        int playerCardValue = UtilityDealer.DealCardValue(cardRoll);
-                        DealtCards.cardFaceDealt = playerCardFace;
-                        DealtCards.cardValueDealt = playerCardValue;
-                        player1CardsList.Add(DealtCards);
-                    }
-                    
-                    //displays hand card faces
+                
+                Console.Clear();
+                Console.WriteLine("BlackJack Game");
+                Console.WriteLine("--------------");
+                Console.WriteLine(" 1. Single Player");
+                Console.WriteLine(" 2. About Game");
+                Console.WriteLine(" 3. Leaderboard");
+                Console.WriteLine(" 4. Quit");
 
-                    for (int i = 0; i < player1CardsList.Count; i++)
-                    {
-                        Console.WriteLine(player1CardsList[i].cardFaceDealt);
-                    }
-                    
-                    
-                    //adds player's cards together then displays them
-                    int handTotal = player1CardsList[0].cardValueDealt + player1CardsList[1].cardValueDealt;
-                    Console.WriteLine("Hand total: " + handTotal);
+                Console.WriteLine("Type numeral and hit enter to select option");
+                selectedOption = Int32.Parse(Console.ReadLine());
 
-                    if (handTotal < 21)
-                    {
-                        Console.WriteLine("Do you want to hit? Y or N");
-                        var hitOrPass = Console.ReadLine();
-                        var hitOrPassToLower = hitOrPass.ToLower();
-
-                        while (handTotal < 21 && hitOrPassToLower == "y")
+                switch (selectedOption)
+                {
+                    
+                    case 1:
+                           Console.Clear();
+                           Console.WriteLine("Dealer: What is your name?");
+                           string player1Name = Console.ReadLine();
+                           int player1Chips = 500;
+                        Console.Clear();   
+                        Console.WriteLine("Dealer: Welcome to the table, " + player1Name + "!");
+                        int singlePlayerSelectedOption = 0;
+                        while (singlePlayerSelectedOption != 2)
                         {
-                            var DealtCards = new DealtCards();
-                            int cardRoll = UtilityDealer.RandomCardRoll();
-                            string playerCardFace = UtilityDealer.DealCardFace(cardRoll);
-                            int playerCardValue = UtilityDealer.DealCardValue(cardRoll);
-                            DealtCards.cardFaceDealt = playerCardFace;
-                            DealtCards.cardValueDealt = playerCardValue;
-                            player1CardsList.Add(DealtCards);
+                            
+                            
+                            Console.WriteLine("You have " + player1Chips + " chips");
+                            Console.WriteLine("Your hand: ");
+
+                            var player1Profile = new List<Player>();
+                            var Player = new Player();
+                            Player.playerName = player1Name;
+                            Player.chipCount = player1Chips;
+                            player1Profile.Add(Player);
+
+                            //deals cards to player
+                            var player1CardsList = new List<DealtCards>();
+                            for (int i = 0; i < 2; i++)
+                            {
+                                var DealtCards = new DealtCards();
+                                int cardRoll = UtilityDealer.RandomCardRoll();
+                                string playerCardFace = UtilityDealer.DealCardFace(cardRoll);
+                                int playerCardValue = UtilityDealer.DealCardValue(cardRoll);
+                                DealtCards.cardFaceDealt = playerCardFace;
+                                DealtCards.cardValueDealt = playerCardValue;
+                                player1CardsList.Add(DealtCards);
+                            }
+                            int handTotal = player1CardsList[0].cardValueDealt + player1CardsList[1].cardValueDealt;
+
+                            UtilityDealer.AceElevenToOne(handTotal, player1CardsList);
+
 
                             //displays hand card faces
-
                             for (int i = 0; i < player1CardsList.Count; i++)
                             {
                                 Console.WriteLine(player1CardsList[i].cardFaceDealt);
                             }
 
-                            //adds player's new cards together then displays them
-                            
-                                handTotal = player1CardsList.Sum(x => x.cardValueDealt);
+                            Console.WriteLine("Hand total: " + handTotal);
+
+                            //deals for the dealer
+                            var dealerCardsList = new List<DealtCards>();
+                            for (int i = 0; i < 2; i++)
+                            {
+                                var DealtCards = new DealtCards();
+                                int cardRoll = UtilityDealer.RandomCardRoll();
+                                string dealerCardFace = UtilityDealer.DealCardFace(cardRoll);
+                                int dealerCardValue = UtilityDealer.DealCardValue(cardRoll);
+                                DealtCards.cardFaceDealt = dealerCardFace;
+                                DealtCards.cardValueDealt = dealerCardValue;
+                                dealerCardsList.Add(DealtCards);
+                            }
+
+                            int dealerHandTotal = dealerCardsList[0].cardValueDealt + dealerCardsList[1].cardValueDealt;
+
+                            Dealer.DealerAceElevenToOne(dealerHandTotal, dealerCardsList);
+
+                            Console.WriteLine("Dealers up card: ");
+                            Console.WriteLine(dealerCardsList[1].cardFaceDealt);
 
 
-                                //handTotal = handTotal + player1CardsList[i].cardValueDealt;
-                                Console.WriteLine("Hand total: " + handTotal);
+                            //temp
 
-                            UtilityDealer.DidYouBust(handTotal);
+                            //Console.WriteLine("Dealer hand total: " + dealerHandTotal);
+
+
+
 
                             if (handTotal < 21)
                             {
-                                Console.WriteLine("Do you want to hit again? Y or N");
-                                hitOrPass = Console.ReadLine();
-                                hitOrPassToLower = hitOrPass.ToLower();
+                                Console.WriteLine("Do you want to hit? Y or N");
+                                var hitOrPass = Console.ReadLine();
+                                var hitOrPassToLower = hitOrPass.ToLower();
+
+                                while (handTotal < 21 && hitOrPassToLower == "y")
+                                {
+                                    var DealtCards = new DealtCards();
+                                    int cardRoll = UtilityDealer.RandomCardRoll();
+                                    string playerCardFace = UtilityDealer.DealCardFace(cardRoll);
+                                    int playerCardValue = UtilityDealer.DealCardValue(cardRoll);
+                                    DealtCards.cardFaceDealt = playerCardFace;
+                                    DealtCards.cardValueDealt = playerCardValue;
+                                    player1CardsList.Add(DealtCards);
+
+                                    Console.Clear();
+                                    //displays hand card faces
+
+                                    for (int i = 0; i < player1CardsList.Count; i++)
+                                    {
+                                        Console.WriteLine(player1CardsList[i].cardFaceDealt);
+                                    }
+
+                                    //adds player's new cards together then displays them
+
+                                    handTotal = player1CardsList.Sum(x => x.cardValueDealt);
+                                    UtilityDealer.AceElevenToOne(handTotal, player1CardsList);
+                                    handTotal = player1CardsList.Sum(x => x.cardValueDealt);
+
+                                    Console.WriteLine("Hand total: " + handTotal);
+                                    Console.WriteLine("----------------------");
+                                    Console.WriteLine("Dealer's up card: " + dealerCardsList[1].cardFaceDealt);
+                                    
+                                    UtilityDealer.DidYouBust(handTotal);
+
+                                    if (handTotal < 21)
+                                    {
+                                        Console.WriteLine("Do you want to hit again? Y or N");
+                                        hitOrPass = Console.ReadLine();
+                                        hitOrPassToLower = hitOrPass.ToLower();
+                                    }
+
+
+                                }
+                            }
+
+                            Dealer.DealerPlayChoice(dealerHandTotal, dealerCardsList);
+
+                            dealerHandTotal = dealerCardsList.Sum(x => x.cardValueDealt);
+
+
+
+                            Console.WriteLine("Dealer hand total: " + dealerHandTotal);
+
+                            UtilityBets.DidPlayerWin(handTotal, dealerHandTotal);
+                            
+                            Console.WriteLine("Press 1 to play again or 9 to return to the main menu");
+                            singlePlayerSelectedOption = Int32.Parse(Console.ReadLine());
+                            Console.Clear();
+                            if (singlePlayerSelectedOption != 1)
+                            {
+                                singlePlayerSelectedOption = 2;
+                                UtilitySave.ReturnToMainMenu();
                             }
                             
+                        }
+                        
 
-                         }
-                    } 
-                    
-                    
-                    
-                    
-                    
-                    //deals for the dealer
-                    var dealerCardsList = new List<DealtCards>();
-                    for (int i = 0; i < 2; i++)
-                    {
-                        var DealtCards = new DealtCards();
-                        int cardRoll = UtilityDealer.RandomCardRoll();
-                        string dealerCardFace = UtilityDealer.DealCardFace(cardRoll);
-                        int dealerCardValue = UtilityDealer.DealCardValue(cardRoll);
-                        DealtCards.cardFaceDealt = dealerCardFace;
-                        DealtCards.cardValueDealt = dealerCardValue;
-                        dealerCardsList.Add(DealtCards);
-                    }
+                       break;
 
-                    Console.WriteLine("Dealers hand: ");
-                    
-                    for (int i = 0; i < dealerCardsList.Count; i++)
-                    {
-                        Console.WriteLine(dealerCardsList[i].cardFaceDealt + " " + dealerCardsList[i].cardValueDealt);
-                    }
+                    case 2:
+                        Console.Clear();
+                        AboutGame.DisplayAbout();
+
+                        break;
 
 
-                    int dealerHandTotal = dealerCardsList[0].cardValueDealt + dealerCardsList[1].cardValueDealt;
-                    Console.WriteLine("Dealer hand total: " + dealerHandTotal);
+                    case 4:
+                        Environment.Exit(0);
 
 
-
-
-
-                    
-
-                    
-                    
-                    //string playerCardOne = UtilityDealer.DealCards();
-                    //string playerCardTwo = UtilityDealer.DealCards();
-
-                    //Console.WriteLine(playerCardOne);
-                    //Console.WriteLine(playerCardTwo);
-
-                    Console.ReadLine();
-                    
-                    
-                    break;
-            
+                        break;
+                }
             }
             
-
+        
         }
         
     }

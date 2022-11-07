@@ -112,31 +112,34 @@ namespace Blackjack_ConsoleApp
             }
 
         }
-        
-        
-        //static public int CardTotal(int cardValueDealt)
-        //{
-           // int handTotal;
-            //for (int i = 0; i < player1CardsList.Count; i++)
-            //{
 
-            //}
-            //player1CardsList.cardValueDealt
+        public static List<DealtCards> AceElevenToOne(int handTotal, List<DealtCards> player1CardsList)
+        {
+            while (handTotal > 21 && player1CardsList.Any(card => card.cardValueDealt == 11))
+            {
+                var i = player1CardsList.FirstOrDefault(card => card.cardValueDealt == 11);
+                i.cardValueDealt = 1;
 
-                
+                handTotal = player1CardsList.Sum(x => x.cardValueDealt);
+            }
         
-    
-    
-    
-    
-    
-    
-    
+            return player1CardsList;
+        }
+
+
+       
+
+
+
+
+
+
+
+
+
+
     }
 }
 //most cards a player can have is 11 individual cards
-//putting cards delt into a list
+//putting cards dealt into a list
 
-//List<string> list = new List<string>();
-//list.Add(cardFace);
-//bool stringIntToInt = list.Contains("2", "3", "4", "5", "6", "7", "8", "9", "10");
