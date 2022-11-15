@@ -10,6 +10,8 @@ namespace Blackjack_ConsoleApp
     {
         public string playerName { get; set;}
         public int chipCount { get; set; }
+
+        public int playerBet { get; set; }  
         
         public List<Player> playerList;
     }

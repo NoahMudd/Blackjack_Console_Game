@@ -46,6 +46,23 @@ namespace Blackjack_ConsoleApp
         }
 
 
+        public static List<DealtCards> DealerDealFirstCards()
+        {
+            var dealerCardsList = new List<DealtCards>();
+            for (int i = 0; i < 2; i++)
+            {
+                var DealtCards = new DealtCards();
+                int cardRoll = UtilityDealer.RandomCardRoll();
+                string dealerCardFace = UtilityDealer.DealCardFace(cardRoll);
+                int dealerCardValue = UtilityDealer.DealCardValue(cardRoll);
+                DealtCards.cardFaceDealt = dealerCardFace;
+                DealtCards.cardValueDealt = dealerCardValue;
+                dealerCardsList.Add(DealtCards);
+            }
 
+            return dealerCardsList;
+        }
+    
+    
     }
 }

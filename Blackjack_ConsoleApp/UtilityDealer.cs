@@ -17,6 +17,27 @@ namespace Blackjack_ConsoleApp
         //} 
 
         
+        public static List<DealtCards> DealFirstCards()
+        {
+            var player1CardsList = new List<DealtCards>();
+            for (int i = 0; i < 2; i++)
+            {
+                var DealtCards = new DealtCards();
+                int cardRoll = UtilityDealer.RandomCardRoll();
+                string playerCardFace = UtilityDealer.DealCardFace(cardRoll);
+                int playerCardValue = UtilityDealer.DealCardValue(cardRoll);
+                DealtCards.cardFaceDealt = playerCardFace;
+                DealtCards.cardValueDealt = playerCardValue;
+                player1CardsList.Add(DealtCards);
+            }
+
+
+
+            return player1CardsList;
+        }
+        
+        
+        
         
         public static int RandomCardRoll()
         {
@@ -25,13 +46,6 @@ namespace Blackjack_ConsoleApp
 
             return cardRoll;
         }
-        
-        
-        
-        
-        
-        
-        
         
         
         public static string DealCardFace(int cardRoll)
@@ -126,7 +140,15 @@ namespace Blackjack_ConsoleApp
             return player1CardsList;
         }
 
-
+        public static void DisplayHandAndTotal(List<DealtCards> player1CardsList, int handTotal)
+        {
+            Console.WriteLine("Your hand: ");
+            for (int i = 0; i < player1CardsList.Count; i++)
+            {
+                Console.WriteLine(player1CardsList[i].cardFaceDealt);
+            }
+            Console.WriteLine("Hand total: " + handTotal);
+        }
        
 
 
@@ -140,6 +162,5 @@ namespace Blackjack_ConsoleApp
 
     }
 }
-//most cards a player can have is 11 individual cards
-//putting cards dealt into a list
+
 

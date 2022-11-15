@@ -10,9 +10,9 @@ namespace Blackjack_ConsoleApp
     {
         public static int ReturnToMainMenu()
         {
-            Console.WriteLine("Press 9 and hit Enter to return to main menu");
+            
             int selectedOption = Int32.Parse(Console.ReadLine());
-            if (selectedOption != 9)
+            if (selectedOption != 9 && selectedOption != 1)
             {
                 Console.WriteLine("Invalid input. Try agin.");
                 selectedOption = Int32.Parse(Console.ReadLine());
