@@ -11,14 +11,14 @@ namespace Blackjack_ConsoleApp
         public static int ReturnToMainMenu()
         {
             
-            int selectedOption = Int32.Parse(Console.ReadLine());
-            if (selectedOption != 9 && selectedOption != 1)
+            int singlePlayerSelectedOption = Int32.Parse(Console.ReadLine());
+            if (singlePlayerSelectedOption != 2 && singlePlayerSelectedOption != 1)
             {
                 Console.WriteLine("Invalid input. Try agin.");
-                selectedOption = Int32.Parse(Console.ReadLine());
+                singlePlayerSelectedOption = Int32.Parse(Console.ReadLine());
             }
 
-            return selectedOption;
+            return singlePlayerSelectedOption;
         }
 
     }

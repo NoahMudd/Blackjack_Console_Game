@@ -13,7 +13,7 @@ namespace Blackjack_ConsoleApp
 
         public int playerBet { get; set; }  
         
-        public List<Player> playerList;
+       
     }
 
 }

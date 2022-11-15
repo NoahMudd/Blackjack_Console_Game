@@ -10,12 +10,11 @@ namespace Blackjack_ConsoleApp
     {
         static void Main(string[] args)
         {
-            int cardOne;
-            int cardTwo;
+            
             
             int selectedOption = 1;
             
-            while (selectedOption != 9)
+            while (selectedOption != 4)
             {
                 
                 Console.Clear();
@@ -23,7 +22,7 @@ namespace Blackjack_ConsoleApp
                 Console.WriteLine("--------------");
                 Console.WriteLine(" 1. Single Player");
                 Console.WriteLine(" 2. About Game");
-                Console.WriteLine(" 3. Leaderboard");
+                //Console.WriteLine(" 3. Leaderboard");
                 Console.WriteLine(" 4. Quit");
 
                 Console.WriteLine("Type numeral and hit enter to select option");
@@ -66,11 +65,6 @@ namespace Blackjack_ConsoleApp
                             //displays hand card faces and total
                             UtilityDealer.DisplayHandAndTotal(player1CardsList, handTotal);
 
-                            
-                            
-                            //Displays player chips after bet
-                            //Console.WriteLine(player1Profile[0].chipCount);
-
                             //deals for the dealer
                             List<DealtCards> dealerCardsList = Dealer.DealerDealFirstCards();
                             
@@ -82,13 +76,7 @@ namespace Blackjack_ConsoleApp
                             Console.WriteLine(dealerCardsList[1].cardFaceDealt);
                             Console.WriteLine("----------------------");
 
-                            //temp
-
-                            //Console.WriteLine("Dealer hand total: " + dealerHandTotal);
-
-
-
-
+                            
                             if (handTotal < 21)
                             {
                                 Console.WriteLine("Do you want to hit? Y or N");
@@ -117,7 +105,7 @@ namespace Blackjack_ConsoleApp
 
                                     handTotal = player1CardsList.Sum(x => x.cardValueDealt);
                                     UtilityDealer.AceElevenToOne(handTotal, player1CardsList);
-                                    handTotal = player1CardsList.Sum(x => x.cardValueDealt);
+                                    //handTotal = player1CardsList.Sum(x => x.cardValueDealt);
 
                                     Console.WriteLine("Hand total: " + handTotal);
                                     Console.WriteLine("----------------------");
@@ -153,20 +141,12 @@ namespace Blackjack_ConsoleApp
                             else
                             {
                                 
-                                Console.WriteLine("Press 1 to play again or 9 to return to the main menu");
+                                Console.WriteLine("Press 1 to play again or 2 to return to the main menu");
                                 singlePlayerSelectedOption = UtilitySave.ReturnToMainMenu();
                                 Console.Clear();
                             }
                             
-                            //singlePlayerSelectedOption = Int32.Parse(Console.ReadLine());
-                            //Console.Clear();
-                            //if (singlePlayerSelectedOption != 1)
-                            //{
-                            //    singlePlayerSelectedOption = 2;
-                            //    UtilitySave.ReturnToMainMenu();
-                            //}
                             
-
                             
                         }
                         
@@ -180,11 +160,10 @@ namespace Blackjack_ConsoleApp
                         break;
 
 
-                    case 4:
-                        Environment.Exit(0);
+                  
 
 
-                        break;
+                        
                 }
             }
             
