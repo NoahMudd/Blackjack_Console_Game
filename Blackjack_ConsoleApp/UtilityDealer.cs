@@ -133,8 +133,9 @@ namespace Blackjack_ConsoleApp
             {
                 var i = player1CardsList.FirstOrDefault(card => card.cardValueDealt == 11);
                 i.cardValueDealt = 1;
-
+                Console.WriteLine(i);
                 handTotal = player1CardsList.Sum(x => x.cardValueDealt);
+                
             }
         
             return player1CardsList;
